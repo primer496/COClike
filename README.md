@@ -1,7 +1,6 @@
-# 🏰 COClike — Clash of Clans Clone (性能优化版)
+# 🏰 COClike — Clash of Clans Clone（性能优化学习项目）
 
-> 基于 [DevelopersHub/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) 的深度性能优化分支。
-> 原项目使用 Unity + .NET + MySQL 从零构建。本分支在此基础上进行了 Burst/Jobs/ECS 大量重构改造，战斗帧耗时从 22ms 降至 4.5ms。
+> 代码来源于 [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone)，本人对其进行大量性能优化改造（Burst/Jobs/ECS），仅作学习用途。本人与原作者**无任何合作关系**，本项目**并非原仓库的上游或分支**。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Unity](https://img.shields.io/badge/Unity-2022.3-black?logo=unity)](https://unity.com/)
@@ -10,16 +9,9 @@
 
 ---
 
-## 🔗 原始项目
-
-| 项目 | 链接 |
-|------|------|
-| **上游仓库** | [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) |
-| **本分支定位** | 在原项目基础上进行大量性能改造：Burst 编译器、Jobs 多线程、ECS 架构迁移、GC 优化等 |
-
----
-
 ## 📸 项目概述
+
+> 本项目代码来自 [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone)，本人主要在战斗系统上做了大量性能优化改造。
 
 | 模块 | 技术栈 | 说明 |
 |------|--------|------|
@@ -27,13 +19,21 @@
 | **服务端 (Server/)** | .NET 6, TCP Socket | 账号管理、匹配、数据持久化 |
 | **数据库 (Database/)** | MySQL / MariaDB | 玩家数据、部落、战斗记录 |
 
-### 核心特性
+### 本人主要工作（性能优化）
+
+- 🚀 **Burst 编译器** — A* 寻路 + 战斗热点路径全部 Burst 化
+- 🧵 **Jobs 多线程** — 将寻路/单位更新移至工作线程并行执行
+- 🧩 **ECS 架构改造** — 战斗核心向 DOTS/ECS 迁移
+- ⚡ **战斗帧 22ms → 4.5ms** — 从超预算到 10% 预算以内
+- 🗑️ **零 GC 压力** — NativeArray + 预分配 Buffer，消除热点路径 GC Alloc
+- 🔍 **Epoch 标记 O(1) 网格重置** — 替代每帧全量清零
+
+### 原项目的核心特性
 
 - ⚔️ **帧同步战斗** — 20 ticks/s 确定性战斗模拟，45×45 网格战场
 - 🏗️ **37 种建筑** / **27 种兵种** / **11 种法术** — 完整游戏内容
-- 🚀 **深度性能优化** — Burst 编译器 + Jobs 多线程 + ECS 架构，战斗帧耗时从 22ms 降至 4.5ms
-- 🌐 **实时 TCP 网络** — 自研 `RealtimeNetworking` 网络库
-- 🔍 **A\* 寻路** — 纯 C# 实现，Epoch 标记 O(1) 网格重置
+- 🌐 **实时 TCP 网络** — `RealtimeNetworking` 网络库
+- 🔍 **A\* 寻路** — 纯 C# 实现
 - 📱 **Android 适配** — 团结引擎 (TuanJie) 移动端支持
 
 ---
@@ -159,12 +159,21 @@ Phase 3: ECS 架构迁移 → ~4.5ms  ✅
 
 ## 📄 许可证
 
-本项目基于上游 [MIT License](LICENSE) 开源。
+本项目基于 [MIT License](LICENSE) 开源。
 
 ---
 
+## ? 原始出处
+
+| 项目 | 地址 |
+|------|------|
+| **原始仓库** | [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) |
+| **原作者** | Developers Hub |
+
+> ⚠️ **声明**：本人与原作者**不认识、无合作**。本项目是作为学习者将原代码拿来学习研究，在此基础上进行了大量性能优化改造。本项目**不是原仓库的 Fork**，也**不代表原作者**。如有问题请到原仓库提 Issue。
+
 ## 🙏 致谢
 
-- [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) — 原始项目，提供了完整的前后端架构与游戏逻辑
 - [Unity](https://unity.com/) — 游戏引擎
+- [Developers Hub](https://github.com/developers-hub-org) — 原始项目作者
 - 本项目仅用于学习和研究目的
