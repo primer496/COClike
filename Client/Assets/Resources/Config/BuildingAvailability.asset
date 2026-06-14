@@ -1,0 +1,1302 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f905d5bc616f3da499ffa991f041333b, type: 3}
+  m_Name: BuildingAvailability
+  m_EditorClassIdentifier: 
+  townHallConfigs:
+  - townHallLevel: 1
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 1
+      maxLevel: 2
+    - id: elixirmine
+      count: 1
+      maxLevel: 2
+    - id: goldstorage
+      count: 1
+      maxLevel: 1
+    - id: elixirstorage
+      count: 1
+      maxLevel: 1
+    - id: armycamp
+      count: 1
+      maxLevel: 1
+    - id: barracks
+      count: 1
+      maxLevel: 3
+    - id: cannon
+      count: 2
+      maxLevel: 2
+  - townHallLevel: 2
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 2
+      maxLevel: 4
+    - id: elixirmine
+      count: 2
+      maxLevel: 4
+    - id: goldstorage
+      count: 1
+      maxLevel: 3
+    - id: elixirstorage
+      count: 1
+      maxLevel: 3
+    - id: armycamp
+      count: 1
+      maxLevel: 2
+    - id: barracks
+      count: 1
+      maxLevel: 4
+    - id: cannon
+      count: 2
+      maxLevel: 3
+    - id: archertower
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 25
+      maxLevel: 2
+  - townHallLevel: 3
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 3
+      maxLevel: 6
+    - id: elixirmine
+      count: 3
+      maxLevel: 6
+    - id: goldstorage
+      count: 2
+      maxLevel: 6
+    - id: elixirstorage
+      count: 2
+      maxLevel: 6
+    - id: clancastle
+      count: 1
+      maxLevel: 1
+    - id: armycamp
+      count: 2
+      maxLevel: 3
+    - id: barracks
+      count: 1
+      maxLevel: 5
+    - id: laboratory
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 2
+      maxLevel: 4
+    - id: archertower
+      count: 1
+      maxLevel: 3
+    - id: mortor
+      count: 1
+      maxLevel: 1
+    - id: wall
+      count: 50
+      maxLevel: 3
+    - id: boomb
+      count: 2
+      maxLevel: 2
+  - townHallLevel: 4
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 4
+      maxLevel: 8
+    - id: elixirmine
+      count: 4
+      maxLevel: 8
+    - id: goldstorage
+      count: 2
+      maxLevel: 8
+    - id: elixirstorage
+      count: 2
+      maxLevel: 8
+    - id: clancastle
+      count: 1
+      maxLevel: 2
+    - id: armycamp
+      count: 2
+      maxLevel: 4
+    - id: barracks
+      count: 1
+      maxLevel: 6
+    - id: laboratory
+      count: 1
+      maxLevel: 2
+    - id: cannon
+      count: 2
+      maxLevel: 5
+    - id: archertower
+      count: 2
+      maxLevel: 4
+    - id: mortor
+      count: 1
+      maxLevel: 2
+    - id: airdefense
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 75
+      maxLevel: 4
+    - id: boomb
+      count: 2
+      maxLevel: 2
+    - id: springtrap
+      count: 2
+      maxLevel: 1
+  - townHallLevel: 5
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 5
+      maxLevel: 10
+    - id: elixirmine
+      count: 5
+      maxLevel: 10
+    - id: goldstorage
+      count: 2
+      maxLevel: 9
+    - id: elixirstorage
+      count: 2
+      maxLevel: 9
+    - id: clancastle
+      count: 1
+      maxLevel: 2
+    - id: armycamp
+      count: 3
+      maxLevel: 5
+    - id: barracks
+      count: 1
+      maxLevel: 7
+    - id: laboratory
+      count: 1
+      maxLevel: 3
+    - id: spellfactory
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 3
+      maxLevel: 6
+    - id: archertower
+      count: 3
+      maxLevel: 6
+    - id: mortor
+      count: 1
+      maxLevel: 3
+    - id: airdefense
+      count: 1
+      maxLevel: 3
+    - id: wizardtower
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 100
+      maxLevel: 5
+    - id: boomb
+      count: 4
+      maxLevel: 3
+    - id: springtrap
+      count: 2
+      maxLevel: 1
+    - id: airbomb
+      count: 2
+      maxLevel: 2
+  - townHallLevel: 6
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 6
+      maxLevel: 10
+    - id: elixirmine
+      count: 6
+      maxLevel: 10
+    - id: goldstorage
+      count: 2
+      maxLevel: 10
+    - id: elixirstorage
+      count: 2
+      maxLevel: 10
+    - id: clancastle
+      count: 1
+      maxLevel: 3
+    - id: armycamp
+      count: 3
+      maxLevel: 6
+    - id: barracks
+      count: 1
+      maxLevel: 8
+    - id: laboratory
+      count: 1
+      maxLevel: 4
+    - id: spellfactory
+      count: 1
+      maxLevel: 2
+    - id: cannon
+      count: 3
+      maxLevel: 7
+    - id: archertower
+      count: 3
+      maxLevel: 7
+    - id: mortor
+      count: 2
+      maxLevel: 4
+    - id: airdefense
+      count: 2
+      maxLevel: 4
+    - id: wizardtower
+      count: 2
+      maxLevel: 3
+    - id: airsweeper
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 125
+      maxLevel: 6
+    - id: boomb
+      count: 4
+      maxLevel: 3
+    - id: springtrap
+      count: 4
+      maxLevel: 1
+    - id: airbomb
+      count: 2
+      maxLevel: 2
+    - id: giantbomb
+      count: 1
+      maxLevel: 2
+  - townHallLevel: 7
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 6
+      maxLevel: 11
+    - id: elixirmine
+      count: 6
+      maxLevel: 11
+    - id: darkelixirmine
+      count: 1
+      maxLevel: 3
+    - id: goldstorage
+      count: 2
+      maxLevel: 11
+    - id: elixirstorage
+      count: 2
+      maxLevel: 11
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 2
+    - id: clancastle
+      count: 1
+      maxLevel: 3
+    - id: armycamp
+      count: 4
+      maxLevel: 6
+    - id: barracks
+      count: 1
+      maxLevel: 9
+    - id: darkbarracks
+      count: 1
+      maxLevel: 2
+    - id: laboratory
+      count: 1
+      maxLevel: 5
+    - id: spellfactory
+      count: 1
+      maxLevel: 3
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 5
+      maxLevel: 8
+    - id: archertower
+      count: 4
+      maxLevel: 8
+    - id: mortor
+      count: 3
+      maxLevel: 5
+    - id: airdefense
+      count: 3
+      maxLevel: 5
+    - id: wizardtower
+      count: 2
+      maxLevel: 4
+    - id: airsweeper
+      count: 1
+      maxLevel: 3
+    - id: hiddentesla
+      count: 2
+      maxLevel: 3
+    - id: wall
+      count: 175
+      maxLevel: 6
+    - id: boomb
+      count: 6
+      maxLevel: 4
+    - id: springtrap
+      count: 4
+      maxLevel: 2
+    - id: airbomb
+      count: 2
+      maxLevel: 3
+    - id: giantbomb
+      count: 2
+      maxLevel: 2
+    - id: seekingairmine
+      count: 1
+      maxLevel: 1
+  - townHallLevel: 8
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 6
+      maxLevel: 12
+    - id: elixirmine
+      count: 6
+      maxLevel: 12
+    - id: darkelixirmine
+      count: 2
+      maxLevel: 3
+    - id: goldstorage
+      count: 3
+      maxLevel: 11
+    - id: elixirstorage
+      count: 3
+      maxLevel: 11
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 4
+    - id: clancastle
+      count: 1
+      maxLevel: 4
+    - id: armycamp
+      count: 4
+      maxLevel: 6
+    - id: barracks
+      count: 1
+      maxLevel: 10
+    - id: darkbarracks
+      count: 1
+      maxLevel: 4
+    - id: laboratory
+      count: 1
+      maxLevel: 6
+    - id: spellfactory
+      count: 1
+      maxLevel: 3
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 2
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 5
+      maxLevel: 10
+    - id: archertower
+      count: 5
+      maxLevel: 10
+    - id: mortor
+      count: 4
+      maxLevel: 6
+    - id: airdefense
+      count: 3
+      maxLevel: 6
+    - id: wizardtower
+      count: 3
+      maxLevel: 6
+    - id: airsweeper
+      count: 1
+      maxLevel: 4
+    - id: hiddentesla
+      count: 3
+      maxLevel: 6
+    - id: bombtower
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 225
+      maxLevel: 8
+    - id: boomb
+      count: 6
+      maxLevel: 5
+    - id: springtrap
+      count: 6
+      maxLevel: 3
+    - id: airbomb
+      count: 4
+      maxLevel: 3
+    - id: giantbomb
+      count: 3
+      maxLevel: 3
+    - id: seekingairmine
+      count: 2
+      maxLevel: 1
+    - id: skeletontrap
+      count: 2
+      maxLevel: 2
+  - townHallLevel: 9
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 12
+    - id: elixirmine
+      count: 7
+      maxLevel: 12
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 6
+    - id: goldstorage
+      count: 4
+      maxLevel: 11
+    - id: elixirstorage
+      count: 4
+      maxLevel: 11
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 6
+    - id: clancastle
+      count: 1
+      maxLevel: 5
+    - id: armycamp
+      count: 4
+      maxLevel: 7
+    - id: barracks
+      count: 1
+      maxLevel: 11
+    - id: darkbarracks
+      count: 1
+      maxLevel: 6
+    - id: laboratory
+      count: 1
+      maxLevel: 7
+    - id: spellfactory
+      count: 1
+      maxLevel: 4
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 4
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 5
+      maxLevel: 11
+    - id: archertower
+      count: 6
+      maxLevel: 11
+    - id: mortor
+      count: 4
+      maxLevel: 7
+    - id: airdefense
+      count: 4
+      maxLevel: 7
+    - id: wizardtower
+      count: 4
+      maxLevel: 7
+    - id: airsweeper
+      count: 2
+      maxLevel: 5
+    - id: hiddentesla
+      count: 4
+      maxLevel: 7
+    - id: bombtower
+      count: 1
+      maxLevel: 3
+    - id: xbow
+      count: 2
+      maxLevel: 3
+    - id: wall
+      count: 250
+      maxLevel: 10
+    - id: boomb
+      count: 6
+      maxLevel: 6
+    - id: springtrap
+      count: 6
+      maxLevel: 4
+    - id: airbomb
+      count: 4
+      maxLevel: 4
+    - id: giantbomb
+      count: 4
+      maxLevel: 3
+    - id: seekingairmine
+      count: 4
+      maxLevel: 2
+    - id: skeletontrap
+      count: 2
+      maxLevel: 3
+  - townHallLevel: 10
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 13
+    - id: elixirmine
+      count: 7
+      maxLevel: 13
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 7
+    - id: goldstorage
+      count: 4
+      maxLevel: 11
+    - id: elixirstorage
+      count: 4
+      maxLevel: 11
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 6
+    - id: clancastle
+      count: 1
+      maxLevel: 6
+    - id: armycamp
+      count: 4
+      maxLevel: 8
+    - id: barracks
+      count: 1
+      maxLevel: 12
+    - id: darkbarracks
+      count: 1
+      maxLevel: 7
+    - id: laboratory
+      count: 1
+      maxLevel: 8
+    - id: spellfactory
+      count: 1
+      maxLevel: 5
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 5
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 6
+      maxLevel: 13
+    - id: archertower
+      count: 7
+      maxLevel: 13
+    - id: mortor
+      count: 4
+      maxLevel: 8
+    - id: airdefense
+      count: 4
+      maxLevel: 8
+    - id: wizardtower
+      count: 4
+      maxLevel: 9
+    - id: airsweeper
+      count: 2
+      maxLevel: 6
+    - id: hiddentesla
+      count: 4
+      maxLevel: 8
+    - id: bombtower
+      count: 2
+      maxLevel: 4
+    - id: xbow
+      count: 3
+      maxLevel: 4
+    - id: infernotower
+      count: 2
+      maxLevel: 3
+    - id: wall
+      count: 275
+      maxLevel: 11
+    - id: boomb
+      count: 6
+      maxLevel: 7
+    - id: springtrap
+      count: 6
+      maxLevel: 5
+    - id: airbomb
+      count: 5
+      maxLevel: 4
+    - id: giantbomb
+      count: 5
+      maxLevel: 4
+    - id: seekingairmine
+      count: 5
+      maxLevel: 3
+    - id: skeletontrap
+      count: 3
+      maxLevel: 4
+  - townHallLevel: 11
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 14
+    - id: elixirmine
+      count: 7
+      maxLevel: 14
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 8
+    - id: goldstorage
+      count: 4
+      maxLevel: 12
+    - id: elixirstorage
+      count: 4
+      maxLevel: 12
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 6
+    - id: clancastle
+      count: 1
+      maxLevel: 7
+    - id: armycamp
+      count: 4
+      maxLevel: 9
+    - id: barracks
+      count: 1
+      maxLevel: 13
+    - id: darkbarracks
+      count: 1
+      maxLevel: 8
+    - id: laboratory
+      count: 1
+      maxLevel: 9
+    - id: spellfactory
+      count: 1
+      maxLevel: 6
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 5
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: wardenaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 7
+      maxLevel: 15
+    - id: archertower
+      count: 8
+      maxLevel: 15
+    - id: mortor
+      count: 4
+      maxLevel: 10
+    - id: airdefense
+      count: 4
+      maxLevel: 9
+    - id: wizardtower
+      count: 5
+      maxLevel: 10
+    - id: airsweeper
+      count: 2
+      maxLevel: 7
+    - id: hiddentesla
+      count: 4
+      maxLevel: 9
+    - id: bombtower
+      count: 2
+      maxLevel: 6
+    - id: xbow
+      count: 4
+      maxLevel: 5
+    - id: infernotower
+      count: 2
+      maxLevel: 5
+    - id: eagleartillery
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 300
+      maxLevel: 12
+    - id: boomb
+      count: 6
+      maxLevel: 8
+    - id: springtrap
+      count: 6
+      maxLevel: 5
+    - id: airbomb
+      count: 5
+      maxLevel: 5
+    - id: giantbomb
+      count: 5
+      maxLevel: 5
+    - id: seekingairmine
+      count: 5
+      maxLevel: 3
+    - id: skeletontrap
+      count: 3
+      maxLevel: 4
+    - id: tornadotrap
+      count: 1
+      maxLevel: 2
+  - townHallLevel: 12
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 15
+    - id: elixirmine
+      count: 7
+      maxLevel: 15
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 9
+    - id: goldstorage
+      count: 4
+      maxLevel: 13
+    - id: elixirstorage
+      count: 4
+      maxLevel: 13
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 7
+    - id: clancastle
+      count: 1
+      maxLevel: 8
+    - id: armycamp
+      count: 4
+      maxLevel: 10
+    - id: barracks
+      count: 1
+      maxLevel: 14
+    - id: darkbarracks
+      count: 1
+      maxLevel: 9
+    - id: laboratory
+      count: 1
+      maxLevel: 10
+    - id: spellfactory
+      count: 1
+      maxLevel: 6
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 5
+    - id: workshop
+      count: 1
+      maxLevel: 3
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: wardenaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 7
+      maxLevel: 17
+    - id: archertower
+      count: 8
+      maxLevel: 17
+    - id: mortor
+      count: 4
+      maxLevel: 12
+    - id: airdefense
+      count: 4
+      maxLevel: 10
+    - id: wizardtower
+      count: 5
+      maxLevel: 11
+    - id: airsweeper
+      count: 2
+      maxLevel: 7
+    - id: hiddentesla
+      count: 5
+      maxLevel: 10
+    - id: bombtower
+      count: 2
+      maxLevel: 7
+    - id: xbow
+      count: 4
+      maxLevel: 6
+    - id: infernotower
+      count: 3
+      maxLevel: 6
+    - id: eagleartillery
+      count: 1
+      maxLevel: 3
+    - id: wall
+      count: 300
+      maxLevel: 13
+    - id: boomb
+      count: 6
+      maxLevel: 8
+    - id: springtrap
+      count: 8
+      maxLevel: 5
+    - id: airbomb
+      count: 6
+      maxLevel: 6
+    - id: giantbomb
+      count: 6
+      maxLevel: 5
+    - id: seekingairmine
+      count: 6
+      maxLevel: 3
+    - id: skeletontrap
+      count: 3
+      maxLevel: 4
+    - id: tornadotrap
+      count: 1
+      maxLevel: 3
+  - townHallLevel: 13
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 15
+    - id: elixirmine
+      count: 7
+      maxLevel: 15
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 9
+    - id: goldstorage
+      count: 4
+      maxLevel: 14
+    - id: elixirstorage
+      count: 4
+      maxLevel: 14
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 8
+    - id: clancastle
+      count: 1
+      maxLevel: 9
+    - id: armycamp
+      count: 4
+      maxLevel: 11
+    - id: barracks
+      count: 1
+      maxLevel: 15
+    - id: darkbarracks
+      count: 1
+      maxLevel: 9
+    - id: laboratory
+      count: 1
+      maxLevel: 11
+    - id: spellfactory
+      count: 1
+      maxLevel: 7
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 5
+    - id: workshop
+      count: 1
+      maxLevel: 5
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: wardenaltar
+      count: 1
+      maxLevel: 1
+    - id: championaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 7
+      maxLevel: 19
+    - id: archertower
+      count: 8
+      maxLevel: 19
+    - id: mortor
+      count: 4
+      maxLevel: 13
+    - id: airdefense
+      count: 4
+      maxLevel: 11
+    - id: wizardtower
+      count: 5
+      maxLevel: 13
+    - id: airsweeper
+      count: 2
+      maxLevel: 7
+    - id: hiddentesla
+      count: 5
+      maxLevel: 12
+    - id: bombtower
+      count: 2
+      maxLevel: 8
+    - id: xbow
+      count: 4
+      maxLevel: 8
+    - id: infernotower
+      count: 3
+      maxLevel: 7
+    - id: eagleartillery
+      count: 1
+      maxLevel: 4
+    - id: scattershot
+      count: 2
+      maxLevel: 2
+    - id: wall
+      count: 300
+      maxLevel: 14
+    - id: boomb
+      count: 7
+      maxLevel: 9
+    - id: springtrap
+      count: 9
+      maxLevel: 5
+    - id: airbomb
+      count: 6
+      maxLevel: 8
+    - id: giantbomb
+      count: 6
+      maxLevel: 7
+    - id: seekingairmine
+      count: 7
+      maxLevel: 4
+    - id: skeletontrap
+      count: 3
+      maxLevel: 4
+    - id: tornadotrap
+      count: 1
+      maxLevel: 3
+  - townHallLevel: 14
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 15
+    - id: elixirmine
+      count: 7
+      maxLevel: 15
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 9
+    - id: goldstorage
+      count: 4
+      maxLevel: 15
+    - id: elixirstorage
+      count: 4
+      maxLevel: 15
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 9
+    - id: clancastle
+      count: 1
+      maxLevel: 10
+    - id: armycamp
+      count: 4
+      maxLevel: 11
+    - id: barracks
+      count: 1
+      maxLevel: 16
+    - id: darkbarracks
+      count: 1
+      maxLevel: 9
+    - id: laboratory
+      count: 1
+      maxLevel: 12
+    - id: spellfactory
+      count: 1
+      maxLevel: 7
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 5
+    - id: workshop
+      count: 1
+      maxLevel: 6
+    - id: pethouse
+      count: 1
+      maxLevel: 4
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: wardenaltar
+      count: 1
+      maxLevel: 1
+    - id: championaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 7
+      maxLevel: 20
+    - id: archertower
+      count: 8
+      maxLevel: 20
+    - id: mortor
+      count: 4
+      maxLevel: 14
+    - id: airdefense
+      count: 4
+      maxLevel: 12
+    - id: wizardtower
+      count: 5
+      maxLevel: 14
+    - id: airsweeper
+      count: 2
+      maxLevel: 7
+    - id: hiddentesla
+      count: 5
+      maxLevel: 13
+    - id: bombtower
+      count: 2
+      maxLevel: 9
+    - id: xbow
+      count: 4
+      maxLevel: 9
+    - id: infernotower
+      count: 3
+      maxLevel: 8
+    - id: eagleartillery
+      count: 1
+      maxLevel: 5
+    - id: scattershot
+      count: 2
+      maxLevel: 3
+    - id: wall
+      count: 325
+      maxLevel: 15
+    - id: boomb
+      count: 8
+      maxLevel: 10
+    - id: springtrap
+      count: 9
+      maxLevel: 5
+    - id: airbomb
+      count: 7
+      maxLevel: 9
+    - id: giantbomb
+      count: 7
+      maxLevel: 8
+    - id: seekingairmine
+      count: 8
+      maxLevel: 4
+    - id: skeletontrap
+      count: 4
+      maxLevel: 4
+    - id: tornadotrap
+      count: 1
+      maxLevel: 3
+  - townHallLevel: 15
+    buildings:
+    - id: townhall
+      count: 1
+      maxLevel: 15
+    - id: buildershut
+      count: 5
+      maxLevel: 1
+    - id: goldmine
+      count: 7
+      maxLevel: 15
+    - id: elixirmine
+      count: 7
+      maxLevel: 15
+    - id: darkelixirmine
+      count: 3
+      maxLevel: 9
+    - id: goldstorage
+      count: 4
+      maxLevel: 16
+    - id: elixirstorage
+      count: 4
+      maxLevel: 16
+    - id: darkelixirstorage
+      count: 1
+      maxLevel: 10
+    - id: clancastle
+      count: 1
+      maxLevel: 11
+    - id: armycamp
+      count: 4
+      maxLevel: 12
+    - id: barracks
+      count: 1
+      maxLevel: 16
+    - id: darkbarracks
+      count: 1
+      maxLevel: 9
+    - id: laboratory
+      count: 1
+      maxLevel: 13
+    - id: spellfactory
+      count: 1
+      maxLevel: 7
+    - id: darkspellfactory
+      count: 1
+      maxLevel: 5
+    - id: workshop
+      count: 1
+      maxLevel: 7
+    - id: pethouse
+      count: 1
+      maxLevel: 8
+    - id: kingaltar
+      count: 1
+      maxLevel: 1
+    - id: qeenaltar
+      count: 1
+      maxLevel: 1
+    - id: wardenaltar
+      count: 1
+      maxLevel: 1
+    - id: championaltar
+      count: 1
+      maxLevel: 1
+    - id: cannon
+      count: 7
+      maxLevel: 21
+    - id: archertower
+      count: 8
+      maxLevel: 21
+    - id: mortor
+      count: 4
+      maxLevel: 15
+    - id: airdefense
+      count: 4
+      maxLevel: 13
+    - id: wizardtower
+      count: 5
+      maxLevel: 15
+    - id: airsweeper
+      count: 2
+      maxLevel: 7
+    - id: hiddentesla
+      count: 5
+      maxLevel: 13
+    - id: bombtower
+      count: 2
+      maxLevel: 10
+    - id: xbow
+      count: 4
+      maxLevel: 10
+    - id: infernotower
+      count: 3
+      maxLevel: 9
+    - id: eagleartillery
+      count: 1
+      maxLevel: 5
+    - id: scattershot
+      count: 2
+      maxLevel: 3
+    - id: spelltower
+      count: 2
+      maxLevel: 3
+    - id: monolith
+      count: 1
+      maxLevel: 2
+    - id: wall
+      count: 325
+      maxLevel: 16
+    - id: boomb
+      count: 8
+      maxLevel: 11
+    - id: springtrap
+      count: 9
+      maxLevel: 5
+    - id: airbomb
+      count: 7
+      maxLevel: 10
+    - id: giantbomb
+      count: 7
+      maxLevel: 8
+    - id: seekingairmine
+      count: 8
+      maxLevel: 4
+    - id: skeletontrap
+      count: 4
+      maxLevel: 4
+    - id: tornadotrap
+      count: 1
+      maxLevel: 3

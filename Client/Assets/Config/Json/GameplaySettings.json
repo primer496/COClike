@@ -1,0 +1,18 @@
+{
+  "maxTownHallLevel": 15,
+  "minGoldCollect": 10,
+  "minElixirCollect": 10,
+  "minDarkElixirCollect": 10,
+  "battleDuration": 120,
+  "battlePrepDuration": 30,
+  "gridSize": 45,
+  "gridCellSize": 1,
+  "battleFrameRate": 0.05,
+  "battleTilesWorthOfOneWall": 15,
+  "battleGroupWallAttackRadius": 5,
+  "battleGridOffset": 2,
+  "shieldMinutesAmountToBattleLost": 180,
+  "recoveryCodeExpiration": 300,
+  "confirmationCodeExpiration": 300,
+  "recoveryCodeLength": 6
+}

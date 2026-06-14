@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b21e16abddcc3941a20adc7526a81e9, type: 3}
+  m_Name: ClanSettings
+  m_EditorClassIdentifier: 
+  clanMaxMembers: 50
+  clansPerPage: 20
+  clanNameMinLength: 3
+  clanJoinTimeGapHours: 24
+  clanCreatePrice: 40000
+  clanWarAttacksPerPlayer: 2
+  clanWarPrepHours: 24
+  clanWarBattleHours: 24
+  clanWarMatchMinPercentage: 0.7
+  clanWarMatchTownHallEffectPercentage: 0.6
+  clanWarMatchSpellFactoryEffectPercentage: 0.05
+  clanWarMatchDarkSpellFactoryEffectPercentage: 0.05
+  clanWarMatchBarracksEffectPercentage: 0.05
+  clanWarMatchDarkBarracksEffectPercentage: 0.05
+  clanWarMatchCampsEffectPercentage: 0.2
+  clanWarAvailableCounts: 050000000a0000000f00000014000000
+  clanRanksWithEditPermission: 0100000002000000
+  clanRanksWithWarPermission: 0100000002000000
+  clanRanksWithKickMembersPermission: 0100000002000000
+  clanRanksWithAcceptJoinRequestsPermission: 0100000002000000
+  clanRanksWithPromoteMembersPermission: 0100000002000000
+  globalChatArchiveMaxMessages: 30
+  clanChatArchiveMaxMessages: 30
+  chatSyncPeriod: 2

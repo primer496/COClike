@@ -1,0 +1,21 @@
+{
+    "dotnet.defaultSolution": "clash-of-clans-clone-main.sln",
+    "files.exclude": {
+        "**/Library": true,
+        "**/Temp": true,
+        "**/obj": true,
+        "**/Obj": true,
+        "**/Logs": true,
+        "**/ProjectSettings": true,
+        "**/UserSettings": true
+    },
+    "search.exclude": {
+        "**/Library": true,
+        "**/Temp": true,
+        "**/obj": true,
+        "**/Obj": true,
+        "**/Logs": true,
+        "**/ProjectSettings": true,
+        "**/UserSettings": true
+    }
+}

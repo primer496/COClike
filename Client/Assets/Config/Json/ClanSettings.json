@@ -1,0 +1,46 @@
+{
+  "clanMaxMembers": 50,
+  "clansPerPage": 20,
+  "clanNameMinLength": 3,
+  "clanJoinTimeGapHours": 24,
+  "clanCreatePrice": 40000,
+  "clanWarAttacksPerPlayer": 2,
+  "clanWarPrepHours": 24,
+  "clanWarBattleHours": 24,
+  "clanWarMatchMinPercentage": 0.7,
+  "clanWarMatchTownHallEffectPercentage": 0.6,
+  "clanWarMatchSpellFactoryEffectPercentage": 0.05,
+  "clanWarMatchDarkSpellFactoryEffectPercentage": 0.05,
+  "clanWarMatchBarracksEffectPercentage": 0.05,
+  "clanWarMatchDarkBarracksEffectPercentage": 0.05,
+  "clanWarMatchCampsEffectPercentage": 0.2,
+  "clanWarAvailableCounts": [
+    5,
+    10,
+    15,
+    20
+  ],
+  "clanRanksWithEditPermission": [
+    1,
+    2
+  ],
+  "clanRanksWithWarPermission": [
+    1,
+    2
+  ],
+  "clanRanksWithKickMembersPermission": [
+    1,
+    2
+  ],
+  "clanRanksWithAcceptJoinRequestsPermission": [
+    1,
+    2
+  ],
+  "clanRanksWithPromoteMembersPermission": [
+    1,
+    2
+  ],
+  "globalChatArchiveMaxMessages": 30,
+  "clanChatArchiveMaxMessages": 30,
+  "chatSyncPeriod": 2
+}
