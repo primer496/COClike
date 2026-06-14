@@ -1,11 +1,21 @@
-# 🏰 COClike — Clash of Clans Clone
+# 🏰 COClike — Clash of Clans Clone (性能优化版)
 
-> 使用 Unity + .NET + MySQL 从零构建的《部落冲突》风格实时策略游戏。包含完整的客户端-服务端 TCP 网络架构、帧同步战斗系统、以及经过 Burst/Jobs/ECS 深度优化的高性能核心。
+> 基于 [DevelopersHub/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) 的深度性能优化分支。
+> 原项目使用 Unity + .NET + MySQL 从零构建。本分支在此基础上进行了 Burst/Jobs/ECS 大量重构改造，战斗帧耗时从 22ms 降至 4.5ms。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Unity](https://img.shields.io/badge/Unity-2022.3-black?logo=unity)](https://unity.com/)
 [![.NET](https://img.shields.io/badge/.NET-6.0-blue?logo=dotnet)](https://dotnet.microsoft.com/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-orange?logo=mysql)](https://www.mysql.com/)
+
+---
+
+## 🔗 原始项目
+
+| 项目 | 链接 |
+|------|------|
+| **上游仓库** | [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) |
+| **本分支定位** | 在原项目基础上进行大量性能改造：Burst 编译器、Jobs 多线程、ECS 架构迁移、GC 优化等 |
 
 ---
 
@@ -149,12 +159,12 @@ Phase 3: ECS 架构迁移 → ~4.5ms  ✅
 
 ## 📄 许可证
 
-本项目基于 [MIT License](LICENSE) 开源。
+本项目基于上游 [MIT License](LICENSE) 开源。
 
 ---
 
 ## 🙏 致谢
 
+- [developers-hub-org/clash-of-clans-clone](https://github.com/developers-hub-org/clash-of-clans-clone) — 原始项目，提供了完整的前后端架构与游戏逻辑
 - [Unity](https://unity.com/) — 游戏引擎
-- [Developers Hub](https://github.com/DevelopersHub) — 原始网络框架
 - 本项目仅用于学习和研究目的
