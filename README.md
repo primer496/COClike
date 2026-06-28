@@ -217,33 +217,21 @@ for (x) for (y) {
 | A* 执行方式 | 主线程串行 Run | Worker Thread 并行 Schedule |
 | 寻路热点 | HandleUnits 83% | FindTargets 63% |
 
-### 证据截图 — 初始 Job 引入（单单位 Complete 模式）
+### 证据截图
 
 > 此阶段采用 **单单位 Schedule + Complete** 模式：每个单位 1 次 8 方向 A* 并行寻路 → 1 次 `Complete()`，单帧内多个单位依次执行，产生 **多次 Complete 调用**。Complete 本身同步等待开销很大。
 
-![次改层级](Client/DOTS/次改层级.png)
-
-> **图6：初始 Job 引入层级** — 每单位单独 Complete 导致热点集中在 `Battle.Unit.FindTargets`，Complete 调用频繁出现在层级中。
-
-![次改层级1](Client/DOTS/次改层级1.png)
-
-> **图7：初始 Job 引入层级（视角2）** — 可见多次 `JobHandle.Complete` 调用分布在帧内不同位置，每次 Complete 阻塞主线程等待 Worker 完成。
-
-![次改层级2](Client/DOTS/次改层级2（这几个主要倾向于减少Complete）.png)
-
-> **图8：初始 Job 引入层级（减少 Complete 倾向）** — 此时已意识到 Complete 开销问题，开始尝试减少单帧 Complete 次数，但仍是单单位粒度。
-
 ![Job引入后峰值 Timeline](Client/DOTS/Job引入后峰值Timelie.png)
 
-> **图9：Job 引入后 Timeline** — 帧时间 32.39ms（~31 FPS）。主线程 `UI_Battle.Update` 22.23ms，`Battle.ExecuteFrame` 21.70ms。Render Thread 的 `Gfx.WaitForGfxCommandsFromMainThread` 12.52ms，说明主线程仍是瓶颈但已大幅改善。
+> **图6：Job 引入后 Timeline** — 帧时间 32.39ms（~31 FPS）。主线程 `UI_Battle.Update` 22.23ms，`Battle.ExecuteFrame` 21.70ms。Render Thread 的 `Gfx.WaitForGfxCommandsFromMainThread` 12.52ms，说明主线程仍是瓶颈但已大幅改善。
 
 ![Job引入后峰值层级](Client/DOTS/Job引入后峰值层级.png)
 
-> **图10：Job 引入后层级** — `UI_Battle.Update [Invoke]` 68.6%，`Battle.Unit.FindTargets` 63.3%（调用 48 次，共 20.51ms）。`AStarBurstJob (Burst)` 已成功出现在层级中（8.7%），证明 Worker Thread 在并行执行寻路。
+> **图7：Job 引入后层级** — `UI_Battle.Update [Invoke]` 68.6%，`Battle.Unit.FindTargets` 63.3%（调用 48 次，共 20.51ms）。`AStarBurstJob (Burst)` 已成功出现在层级中（8.7%），证明 Worker Thread 在并行执行寻路。
 
 ![Job引入后峰值 JobWorker](Client/DOTS/Job引入后峰值Jobworker.png)
 
-> **图11：Job Worker 线程活动** — `Job.Worker 1` 显示 `AStarBurstJob (Burst)` 占 3.0%，`ExecuteRenderQueueJob` 等渲染 Job 共 ~0.8%。Worker 88% 时间空闲，说明 Job 系统负载不饱和，瓶颈不在 Worker 端而在 Complete 等待。
+> **图8：Job Worker 线程活动** — `Job.Worker 1` 显示 `AStarBurstJob (Burst)` 占 3.0%，`ExecuteRenderQueueJob` 等渲染 Job 共 ~0.8%。Worker 88% 时间空闲，说明 Job 系统负载不饱和，瓶颈不在 Worker 端而在 Complete 等待。
 
 ### Route B 探索：全量批处理方案（512 槽位，后弃用）
 
@@ -346,15 +334,15 @@ ProcessRepathQueueWithBudget()
 
 ![最后 Timeline](Client/DOTS/最后Timeline.png)
 
-> **图12：最终 Timeline** — 帧时间稳定在 8-16ms 范围内，`UI_Battle.Update` 仅 3.23ms，`BehaviourUpdate` 4.39ms。主线程和渲染线程工作分布均衡，无显著等待。
+> **图9：最终 Timeline** — 帧时间稳定在 8-16ms 范围内，`UI_Battle.Update` 仅 3.23ms，`BehaviourUpdate` 4.39ms。主线程和渲染线程工作分布均衡，无显著等待。
 
 ![最后层级](Client/DOTS/最后层级.png)
 
-> **图13：最终层级** — `UI_Battle.Update` 仅 20.2%，`Battle.ExecuteFrame` 11.8%，`Battle.HandleUnits` 11.4%。`AStarBurstJob (Burst)` 3.3%。关键指标：**GC 分配列全部为 0 B**，热路径零分配。
+> **图10：最终层级** — `UI_Battle.Update` 仅 20.2%，`Battle.ExecuteFrame` 11.8%，`Battle.HandleUnits` 11.4%。`AStarBurstJob (Burst)` 3.3%。关键指标：**GC 分配列全部为 0 B**，热路径零分配。
 
 ![最后内存](Client/DOTS/最后内存.png)
 
-> **图14：最终内存** — 总内存 0.62 GB（含 Profiler 自身 39.4 MB），托管堆仅 28.4 MB。无 GC 尖峰，CPU 时间线平滑稳定。纹理 13.4 MB，网格 330.6 KB，资产使用高效。
+> **图11：最终内存** — 总内存 0.62 GB（含 Profiler 自身 39.4 MB），托管堆仅 28.4 MB。无 GC 尖峰，CPU 时间线平滑稳定。纹理 13.4 MB，网格 330.6 KB，资产使用高效。
 
 ---
 
@@ -419,9 +407,6 @@ Phase 3: 预算型微批处理 (最终)
 | `Client/DOTS/稳定战斗内存（初）.png` | Phase 0 | 初始内存：42ms GC 暂停，托管堆 38.6 MB |
 | `Client/DOTS/Brsut优化Timeline.png` | Phase 1 | Burst 后 Timeline：GC 下降，主线程仍 49ms |
 | `Client/DOTS/Brust优化层级（GC明显下降）.png` | Phase 1 | Burst 后层级：GC 分配降至 33.8 KB |
-| `Client/DOTS/次改层级.png` | Phase 2 | 初始 Job 引入：单单位 Complete，多次 Complete/帧 |
-| `Client/DOTS/次改层级1.png` | Phase 2 | 初始 Job 引入（视角2）：Complete 调用分散在帧内各处 |
-| `Client/DOTS/次改层级2（这几个主要倾向于减少Complete）.png` | Phase 2 | 初始 Job 引入：意识到 Complete 开销，开始尝试减少 |
 | `Client/DOTS/Job引入后峰值Timelie.png` | Phase 2 | Job 后 Timeline：32ms 帧，Worker Thread 活跃 |
 | `Client/DOTS/Job引入后峰值层级.png` | Phase 2 | Job 后层级：AStarBurstJob 8.7%，FindTargets 63.3% |
 | `Client/DOTS/Job引入后峰值Jobworker.png` | Phase 2 | Job Worker：AStarBurstJob 在 Worker 线程执行 |
