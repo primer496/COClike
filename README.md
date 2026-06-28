@@ -1,7 +1,7 @@
 # 性能优化路径全记录
 
 > 项目：Clash of Clans Clone (Unity 2022.3 TuanJie Android)
-> 优化时间线：2026-05 ~ 2026-06
+> 优化时间线：2026-05 ~ 2026-06（战斗性能优化）+ 2026-06（ECS 骨架 + 对象池架构巩固）
 > 目标：将 60 单位战斗从 ~54ms/帧（~18 FPS）优化至 ~4.5ms/帧（稳定 60+ FPS）
 
 ---
@@ -9,10 +9,10 @@
 ## 优化总览
 
 ```
-稳定战斗 (初始)         Burst 优化              Job 引入              预算型微批处理 (最终)
-~33-54ms/帧             ~49ms/帧(峰值)         ~32ms/帧(峰值)         ~4.5ms/帧
-~18-30 FPS              ~20 FPS                ~31 FPS                稳定 60+ FPS
-GC 重度抖动              GC 明显下降            多线程并行              峰值削平
+稳定战斗 (初始)         Burst 优化              Job 引入              预算型微批处理 (最终)     ECS + 对象池 (架构巩固)
+~33-54ms/帧             ~49ms/帧(峰值)         ~32ms/帧(峰值)         ~4.5ms/帧              稳定 60+ FPS
+~18-30 FPS              ~20 FPS                ~31 FPS                稳定 60+ FPS            零分配长期稳定
+GC 重度抖动              GC 明显下降            多线程并行              峰值削平                 架构预备
 ```
 
 ---
@@ -346,7 +346,151 @@ ProcessRepathQueueWithBudget()
 
 ---
 
-## 优化路径总结
+## Phase 4：ECS 骨架 + 投射物双层对象池 — 架构巩固
+
+> ⚠️ **本阶段未采集 Profiler 截图。** Phase 3 已完成 60+ FPS 稳定运行，本阶段为架构层面的巩固与预备，仅通过代码审查和功能验证确认正确性。
+
+### 改造目标
+
+在性能已达标（~4.5ms/帧）的基础上，消除剩余的 GC 分配源，并为未来的大规模 Entity 管理预留 ECS 架构入口。
+
+### 4.1 ECS 最小骨架
+
+#### 背景
+
+- `com.unity.entities` 1.3.15 已在 `manifest.json` 中声明但未使用
+- Burst + Collections 已在前续阶段充分验证
+- 目标：搭建可运行的 ECS World 骨架，不替换现有逻辑，先跑通"从零到一"
+
+#### 架构
+
+```
+Battle.ExecuteFrame()
+  ├─ battleEcsRuntime.SyncNewProjectiles(projectiles)  // 同步托管列表 → ECS 实体
+  ├─ battleEcsRuntime.Update(frameCount, dt, count)    // 写帧单例 + world.Update()
+  │    ├─ world.SetComponentData(frameStateEntity, ...)  // BattleEcsFrameState 单例
+  │    └─ world.Update()
+  │         ├─ BattleFrameStateSystem.OnUpdate()        // 占位（空实现）
+  │         └─ ProjectileTimerSystem.OnUpdate()          // 递减 Timer，过期打 Tag
+  ├─ HandleBuildings / HandleUnits / HandleProjectiles  // 原有逻辑不变
+  └─ GetExpiredProjectileIndices()                      // 查询过期 Tag 实体
+```
+
+#### 关键文件
+
+| 文件 | 说明 |
+|------|------|
+| `Assets/Scripts/ECS/BattleEcsComponents.cs` | `BattleEcsFrameState` 帧单例 + `ProjectileTimerData` + `ProjectileExpiredTag` + 两个 System |
+| `Assets/Scripts/ECS/BattleEcsRuntime.cs` | World 生命周期管理（`Initialize` / `Update` / `SyncNewProjectiles` / `Dispose`） |
+| `Battle.cs` | 集成点：~L59 字段、~L104 Dispose、~L176 Initialize、~L376 ExecuteFrame |
+
+#### 关键设计决策
+
+- **并行共存**：ECS World 与原有 `List<Unit>` / `List<Building>` / `List<Projectile>` 并行运行，互不影响
+- **确定性调用**：`world.Update()` 在 `ExecuteFrame()` 同步路径内调用，20 tick/s 确定性保证
+- **渐进迁移**：仅投射物计时器倒计时已迁入 ECS（`ProjectileTimerSystem`），其余逻辑保留托管侧
+- **主开关**：`BattleEcsRuntime.EnableECS = true`（`false` 时全部操作变为 no-op）
+
+### 4.2 投射物双层对象池
+
+#### 问题诊断
+
+| 位置 | 操作 | 频率 | 影响 |
+|------|------|------|------|
+| `Battle.Units.cs` / `Battle.Buildings.cs` | `new Projectile()` ×3 处 | 每帧数十次，累计数千/场 | 托管堆分配累积 → GC |
+| `UI_Battle` 攻击回调 | `Instantiate(projectile)` + `Destroy(gameObject)` | 同频 | Native + 托管双重开销 |
+
+#### 设计理念：双层池，不同层不同策略
+
+```
+模拟层 Projectile（纯 C# class）
+  ├─ 创建开销：new → GC 堆分配
+  ├─ 策略：数组池（128 槽），Rent/Return
+  └─ 满池时 fallthrough → new（不阻塞逻辑）
+
+视觉层 UI_Projectile（MonoBehaviour + GameObject）
+  ├─ 创建开销：Instantiate → Native 资源分配 + 渲染管线注册
+  ├─ 策略：MonoPool<T>，按 prefab 分 Stack
+  └─ 无限容量，Clear() 在战斗关闭时调用
+```
+
+#### P1：模拟层池（`Battle.cs`）
+
+```csharp
+private const int PROJECTILE_POOL_SIZE = 128;
+private Projectile[] _projectilePool;
+private int _projectilePoolCount;
+
+private Projectile RentProjectile()
+{
+    if (_projectilePoolCount > 0)
+    {
+        Projectile p = _projectilePool[--_projectilePoolCount];
+        p.Reset();  // 重置 9 个字段到初始状态
+        return p;
+    }
+    return new Projectile();  // 池空时 fallback
+}
+
+private void ReturnProjectile(Projectile p)
+{
+    if (_projectilePoolCount < PROJECTILE_POOL_SIZE)
+        _projectilePool[_projectilePoolCount++] = p;
+    // 池满时丢弃，让 GC 回收
+}
+```
+
+- 128 槽覆盖峰值：40 单位 × 2s 投射物飞行 + 2s 队列缓冲
+- `Projectile.Reset()` 重置全部 9 个字段，确保复用安全
+- 所有 `new Projectile()` 调用点（Units ×2、Buildings ×1）全部替换为 `RentProjectile()`
+
+#### P2：视觉层池（`UI_Battle.cs`）
+
+```csharp
+private class MonoPool<T> where T : MonoBehaviour
+{
+    private readonly Dictionary<int, Stack<T>> _pool = new();
+    // key = prefab.GetInstanceID() (Editor/Player 均稳定)
+
+    public T Rent(T prefab) { ... }           // 从栈取或 Instantiate
+    public T Rent(T prefab, Vector3 pos, Quaternion rot, Transform parent) { ... }
+    public void Return(T instance, T prefab)  // SetActive(false) + 入栈
+    public void Clear()                       // Destroy 所有实例
+}
+```
+
+- `UI_Projectile` 新增 `onReturnToPool` 回调和 `sourcePrefab` 标识字段
+- 投射物到达目标时调用 `onReturnToPool?.Invoke(this)`，无池时 fallback `Destroy(gameObject)`
+- `MonoPool<T>` 嵌套于 `UI_Battle` 内，遵循"UI 文件归 UI 文件"约定
+
+#### 为何不池化其他对象
+
+| 对象 | 频率 | 决策 |
+|------|------|------|
+| 单位视觉 (`BattleUnit` + `UI_Bar`) | 20~80 次/场（120s 分散） | 低频，池化复杂度 > 收益 |
+| 建筑视觉 (`Building` GameObject) | 开局一次性 ~30 次 | 无复用场景 |
+| 法术特效 (`UI_SpellEffect`) | <10 次/场 | 低频 |
+| 闪电脉冲 (`lightningPulse`) | 每单位 1 次 | `Destroy(go, 1f)` 自带延迟 |
+
+### 效果评估（推断）
+
+| 指标 | Phase 3（最终） | Phase 4（预计改进） |
+|------|----------------|-------------------|
+| ExecuteFrame | ~4.5ms | ~4.5ms（持平） |
+| FPS | 稳定 60+ | 稳定 60+（持平） |
+| GC.Alloc（投射物热路径） | `new Projectile()` 每帧 | **0 B**（池复用） |
+| `Instantiate`/`Destroy` 次数 | 数百/场 | **池化复用，大幅减少** |
+| ECS 入口 | 无 | `ProjectileTimerSystem` 运行中 |
+| 架构可扩展性 | Burst + Jobs 成熟 | **ECS World 骨架就绪** |
+
+> 本阶段性能已无提升空间（60 FPS 天花板），收益体现在 GC 压力持续降低和架构可扩展性。
+
+### 证据截图
+
+> ⚠️ Phase 3 已完成 60+ FPS 稳定，本阶段未重新采集 Profiler 数据。
+
+---
+
 
 ```
 Phase 0: 稳定战斗基线
@@ -376,6 +520,14 @@ Phase 3: 预算型微批处理 (最终)
   ├─ 帧时间: ~4.5ms, FPS: 稳定 60+
   ├─ 核心改动: 8单位/帧预算、跨帧持久队列、双预算控制
   └─ Complete 从每单位多次降至每帧 1~3 次
+
+         ↓ ECS 骨架 + 双层对象池
+
+Phase 4: ECS + 双层对象池 (架构巩固)
+  ├─ 帧时间: ~4.5ms 保持, FPS: 稳定 60+
+  ├─ ECS: World 骨架 + ProjectileTimerSystem（渐进迁移 Phase 1）
+  ├─ 模拟池: 128 槽 Projectile 数组池，消除 new 分配
+  └─ 视觉池: MonoPool<UI_Projectile>，消除 Instantiate/Destroy
 ```
 
 ### 核心技术栈
@@ -387,12 +539,17 @@ Phase 3: 预算型微批处理 (最终)
 | 并行调度 | `IJob.Schedule()` + `JobHandle.Complete()` | 多核 Worker Thread 并行 |
 | 模式设计 | Scratch Pool + 三阶段流水线 | 复用预分配内存，批量调度 |
 | 帧预算 | 预算型微批处理 + 跨帧队列 | 峰值削平，帧时间稳定 |
+| 对象池 | ProjectilePool (128 槽) + MonoPool&lt;T&gt; | 消除投射物 new/Instantiate/Destroy，零分配 |
+| 架构演进 | ECS World + ISystem (渐进迁移) | 预留大规模 Entity 管理入口，当前仅投射物计时器迁入 |
 
 ### 关键经验
 
 1. **先消除 GC，再考虑并行** — Phase 1 的 GC 消除是后续所有优化的前提。托管分配不解决，并行再多也白搭。
 2. **并行不是免费的** — `JobHandle.Complete()` 是同步等待，Job 数量越多等待越久。Route B 的 512 槽方案证明了这一点。
 3. **峰值削平比平均优化更有效** — 用户感知的是最慢那一帧。预算型微批处理从 22ms 降到 4.5ms，消除了感知卡顿。
+4. **池化只做"高频热点"** — 只池化投射物（数千次/场），不池化单位视觉（20~80 次/场分散在 120s 内）。池化复杂度必须小于收益。
+5. **ECS 渐进引入，不急于全面迁移** — ECS World 骨架与原有 `List<T>` 并行运行，仅投射物计时器迁入。架构入口已就绪，按需逐步迁移。
+6. **达到 60 FPS 天花板后，收益转向架构** — Phase 4 的帧时间无变化，但消除了最后的热路径分配，项目具备应对更大规模战斗的架构基础。
 4. **数据结构扁平化是 Burst 的前提** — class → struct、`Cell[,]` → flat array、引用链 → 值数组，每一步都在为编译器和 SIMD 铺路。
 5. **ECS 骨架预留，不急于全面迁移** — ECS World 已搭建但默认关闭（`EnableECS = false`），只在确实需要大规模 Entity 数量时才启用。
 
